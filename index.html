@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>Student Project - Molecule Viewer</title>
+		<script src="jquery.min.js"></script>
+
+		<style>
+			html, body {
+				height: 100%;
+			}
+
+			body {
+			
+
+				margin: 0;
+				font-family: Arial;
+				overflow: hidden;
+			}
+
+
+			#info {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+				z-index: 1;
+			}
+
+			#menu {
+				border:1px solid black;
+				width: 30%;
+				padding: 0;
+				margin: 5px;
+			}
+
+			#topmenu {
+				padding: 0;
+				margin: 0;
+			}
+
+			button {
+				cursor: pointer;
+			}
+			button:hover {
+				background-color: rgba(0,255,255,0.5);
+			}
+			button:active {
+				color: #000000;
+				background-color: rgba(0,255,255,1);
+			}
+
+			.bond {
+				width: 5px;
+				height: 10px;
+				background: #eee;
+				display: block;
+			}
+			
+			.axis {
+				width: 5px;
+				height: 10px;
+				background: orange;
+				display: block;
+			}
+			
+			.cell {
+				width: 5px;
+				height: 10px;
+				background: blue;
+				display: block;
+			}
+			
+			#canvas {
+				
+				background-color: #050505;
+				background: rgb(43,45,48);
+				background: -moz-radial-gradient(center, ellipse cover,  rgba(43,45,48,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+				background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(43,45,48,1)), color-stop(100%,rgba(0,0,0,1)));
+				background: -webkit-radial-gradient(center, ellipse cover,  rgba(43,45,48,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-radial-gradient(center, ellipse cover,  rgba(43,45,48,1) 0%,rgba(0,0,0,1) 100%); /* Opera 12+ */
+				background: -ms-radial-gradient(center, ellipse cover,  rgba(43,45,48,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+				background: radial-gradient(ellipse at center,  rgba(43,45,48,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+				
+				
+				width: 800px;
+				height: 600px;
+				border: 1px solid black;
+				padding: 0px;
+				position: fixed; /* fixed or static */
+				top:0px;
+				right:0px;
+			}
+			
+			#canvas.white {
+				background: #FFF;
+			}
+			
+			#input_base {
+				width:70%;
+				margin-left:5%;
+			}
+			
+			#input_atoms {
+				width:70%;
+				margin-left:5%;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="menu">
+			<h3>Visualisation</h2>
+			<div id="topmenu">
+				<button id="b_a">Axis</button>
+				<button id="b_b">Unit Cell</button>
+				<button id="b_bg">Background</button>
+				<button id="b_rot">Rotation</button><br />
+				<small>Repeat cells</small>
+				<input type="text" id="plot_n" value="1" size="1" />
+				<small> times for crystal</small><br />
+				<small>Resolution X: </small>
+					<input type="text" id="plot_x" value="800" size="1" /> 
+				<small>Y: </small>
+					<input type="text" id="plot_y" value="600" size="3" />
+					<button id="b_size">Update</button><br />
+				
+			
+			</div>
+
+			<h3>Structure input</h2>
+			Base vectors<br />
+			<small>x y z in Ångström, separated by tabstops</small><br />
+			<textarea id="input_base" rows=3>
+a1	1.595	-2.762	0
+a2	1.595	2.762	0
+a3	0	0	5.185</textarea><br />
+			Atom positions<br />
+			<small>In fractional coordinates of the base vectors, separated by tabstops</small><br />
+			<textarea id="input_atoms" rows=6>
+Ga	1/3	2/3	0
+Ga	2/3	1/3	0.5
+As	1/3	2/3	0.376
+As	2/3	1/3	0.876</textarea><br />
+			<button id="plot_cell" onClick="plotCell()">Plot Unit Cell</button>
+			<button id="plot_cell" onClick="plotCrystal($('#plot_n').val())">Plot Crystal</button>
+			
+			<h3>Crystal Presets</h2>
+			<div id="presets"></div>
+			
+		</div>
+		
+		<div id="canvas"></div>
+		
+		<script src="three.min.js"></script>
+		<script src="TrackballControls.js"></script>
+		<script src="CSS3DRenderer.js"></script>
+		<script src="MoleculeViewer.js"></script>
+	</body>
+
+</html>
