@@ -77,6 +77,13 @@
 				display: block;
 			}
 			
+			.label {
+				color:#FFF;
+				text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+				z-index:2;
+				font-size:200%;
+			}
+			
 			#canvas {
 				
 				background-color: #050505;
@@ -116,7 +123,7 @@
 	</head>
 	<body>
 		<div id="menu">
-			<h3>Visualisation</h2>
+			<h3>Visualisation</h3>
 			<div id="topmenu">
 				<button id="b_a">Axis</button>
 				<button id="b_b">Unit Cell</button>
@@ -126,15 +133,17 @@
 				<input type="text" id="plot_n" value="1" size="1" />
 				<small> times for crystal</small><br />
 				<small>Resolution X: </small>
-					<input type="text" id="plot_x" value="800" size="1" /> 
+					<input type="text" id="plot_x" value="800" size="3" /> 
 				<small>Y: </small>
 					<input type="text" id="plot_y" value="600" size="3" />
 					<button id="b_size">Update</button><br />
-				
+				<small>Inverse size of spheres (std: 100) </small>
+					<input type="text" id="plot_asize" value="100" size="3" />
+					<button id="b_asize">Update</button><br />
 			
 			</div>
 
-			<h3>Structure input</h2>
+			<h3>Structure input</h3>
 			Base vectors<br />
 			<small>x y z in Ångström, separated by tabstops</small><br />
 			<textarea id="input_base" rows=3>
@@ -149,11 +158,35 @@ Ga	2/3	1/3	0.5
 As	1/3	2/3	0.376
 As	2/3	1/3	0.876</textarea><br />
 			<button id="plot_cell" onClick="plotCell()">Plot Unit Cell</button>
-			<button id="plot_cell" onClick="plotCrystal($('#plot_n').val())">Plot Crystal</button>
+			<button id="plot_crystal" onClick="plotCrystal($('#plot_n').val())">Plot Crystal</button>
 			
-			<h3>Crystal Presets</h2>
+			<h3>Crystal Presets</h3>
 			<div id="presets"></div>
+			<button id="preset_Al" 		onClick="preset('Al')">Al (fcc)</button>
+			<button id="preset_NaCl" 	onClick="preset('NaCl')">NaCl (fcc)</button>
+			<button id="preset_CsCl" 	onClick="preset('CsCl')">CsCl (sc)</button>
+			<button id="preset_SrTiO3" 	onClick="preset('SrTiO3')">SrTiO3 (sc)</button>
+			<button id="preset_GaAs" 	onClick="preset('GaAs')">GaAs (Zincblend, fcc)</button>
+			<button id="preset_GaN" 	onClick="preset('GaN')">GaN (Wurtzite, hex)</button>
 			
+			<h3>Calculations</h3>
+			<table>
+				<tr>
+					<td>Cell Volume</td>
+					<td id="calc_volume"></td>
+					<td>Å<sup>3</sup></td>
+				</tr>
+				<tr>
+					<td>Cell Mass</td>
+					<td id="calc_mass"></td>
+					<td>u</td>
+				</tr>
+				<tr>
+					<td>Density</td>
+					<td id="calc_density"></td>
+					<td>uÅ<sup>-3</sup></td>
+				</tr>
+			</table>
 		</div>
 		
 		<div id="canvas"></div>
