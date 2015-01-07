@@ -190,6 +190,19 @@ function render() {
 //Plots unit cell
 function plotCell() {
 	console.log("plotCell()")
+	
+	// Format input
+	var tmp_base = $('#input_base').val()
+	tmp_base = tmp_base.replace(/\s{2,}/g, ' ');
+	tmp_base = tmp_base.replace(' ', '\t');
+	$('#input_base').val(tmp_base)
+	
+	var tmp_atoms = $('#input_atoms').val()
+	tmp_atoms = tmp_atoms.replace(/\s{2,}/g, ' ');
+	tmp_atoms = tmp_atoms.replace(' ', '\t');
+	$('#input_atoms').val(tmp_atoms)
+	
+	//
 	for ( var i = 0; i < objects.length; i ++ ) {
 
 		var object = objects[ i ];
